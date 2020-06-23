@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test</title>
+</head>
+<body>
+    <button onclick="a()">FETCH</button>
+    <br>
+    <!--<form name="f1" method="get"
+     onsubmit="b()">-->
+        <input name="n1" id="t1" type="text" required/>
+        <br><br>
+    <button onclick="b(document.getElementById('t1').value)" >Submit</button>
+    <!--</form>-->
+    <div id="myData"></div>
+    <script>
+        var id1=document.getElementById("t1").value;
+        function a()
+        {
+            fetch('http://localhost:3000/authors')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData(data);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        }
+        function appendData(data) {
+            var mainContainer = document.getElementById("myData");
+            for (var i = 0; i < data.length; i++) {
+                console.log("HEllo");
+                
+               if(id1.length!=0)
+               {
+                var div = document.createElement("div");
+                   console.log("ggg");
+                   if(data[i].id==parseInt(id1))
+                   {
+                    div.innerHTML = 'Name: ' + data[i].id + ' ' + data[i].name;
+                    mainContainer.appendChild(div);
+                   }
+
+               }
+               //console.log(typeof(data[i].id));
+               else
+               {
+                var div = document.createElement("div");
+                div.innerHTML = 'Name: ' + data[i].id + ' ' + data[i].name;
+                mainContainer.appendChild(div);
+               }
+               // mainContainer.appendChild(img);
+            }
+        }
+        function b(n1)
+        {
+            fetch('http://localhost:3000/authors')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                appendData1(data,n1);
+            })
+            .catch(function (err) {
+                console.log('error: ' + err);
+            });
+        }
+        function appendData1(data,n1) {
+            var mainContainer = document.getElementById("myData");
+            console.log(n1);
+            for (var i = 0; i < data.length; i++) {
+                console.log("HEllo");
+                
+               if(n1.length!=0)
+               {
+                var div = document.createElement("div");
+                   console.log("ggg");
+                   if(data[i].id==parseInt(n1))
+                   {
+                    div.innerHTML = 'Name: ' + data[i].id + ' ' + data[i].name;
+                    mainContainer.appendChild(div);
+                    break;
+                   }
+
+               }
+               //console.log(typeof(data[i].id));
+              /* else
+               {
+                var div = document.createElement("div");
+                div.innerHTML = 'Name: ' + data[i].id + ' ' + data[i].name;
+                mainContainer.appendChild(div);
+               }*/
+               // mainContainer.appendChild(img);
+            }
+        }
+        function c()
+        {
+        const user = {
+    id: 6,
+    name: 'Doe',
+    city: 'Blogger'
+};
+
+// create request object
+const request = new Request("http://localhost:3000/authors", {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: new Headers({
+        'Content-Type': 'application/json'
+    })
+});
+
+// pass request object to `fetch()`
+fetch(request)
+    .then(res => res.json())
+    .then(res => console.log(res));
+}
+//c();
+function d()
+{
+    const user1={
+        id:4,
+        name:'ABC',
+        city:'KNP'
+    };
+    const req = new Request("http://localhost:3000/authors",{
+        method:'PUT',
+        body: JSON.stringify(user1),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    fetch(req)
+    .then(res=>res.json())
+    .then(res=>console.log(res));
+}
+//d();
+function e()
+{
+    const user2={
+        id:6
+    };
+    const req1=new Request("http://localhost:3000/authors",{
+        method:'DELETE',
+        body: JSON.stringify(user2),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    });
+    fetch(req1)
+    .then(console.log("DELETED"));
+    //.then(res=>console.log(res));
+}
+e();
+        
+        
+    </script>
+</body>
+</html>
